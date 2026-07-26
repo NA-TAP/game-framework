@@ -39,9 +39,10 @@ class Board:
         print("\n".join(lines))
     
 class Piece:
-    def __init__(self, kind, color):
+    def __init__(self, kind, color, movement):
         self.kind = kind
         self.color = color
+        self.movement = parse_mvment(movement)
         
     def __eq__(self, value):
         if isinstance(value, Piece):
@@ -49,3 +50,6 @@ class Piece:
         elif isinstance(value, tuple):
             kind, color = value
             return self.kind == kind and self.color == color
+        
+    def parse_mvment(mvment):
+        pass    
