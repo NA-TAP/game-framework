@@ -1,3 +1,5 @@
+import re
+
 def construct_dict(width, height):
     """Creates a dictionary of width and height
 
@@ -42,7 +44,7 @@ class Piece:
     def __init__(self, kind, color, movement):
         self.kind = kind
         self.color = color
-        self.movement = parse_mvment(movement)
+        self.movement = self.parse_mvment(movement)
         
     def __eq__(self, value):
         if isinstance(value, Piece):
@@ -52,4 +54,13 @@ class Piece:
             return self.kind == kind and self.color == color
         
     def parse_mvment(mvment):
-        pass    
+        matches = re.fullmatch(r"^S\(([-0-9,|]+)\)/J\(([-0-9,|]+)\)$",mvment, re.IGNORECASE, re.MULTILINE, re.UNICODE) # the only and first regex in my code !!!!
+        groups = matches.groups()
+        slide = groups[1]
+        jump = groups[2] 
+        sl = [tuple(thing.split(",")) for thing in slide.split("|")]
+        jmp = [tuple(thing.split(",")) for thing in jump.split("|")]
+        return {
+            "slide": sl,
+            "jump": jmp
+        }
