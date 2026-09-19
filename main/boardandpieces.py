@@ -53,7 +53,7 @@ class Piece:
             kind, color = value
             return self.kind == kind and self.color == color
         
-    def parse_mvment(mvment):
+    def parse_mvment(self, mvment):
         matches = re.fullmatch(r"^S\(([-0-9,|]+)\)/J\(([-0-9,|]+)\)$",mvment, re.IGNORECASE, re.MULTILINE, re.UNICODE) # the only and first regex in my code !!!!
         groups = matches.groups()
         slide = groups[1]
@@ -64,3 +64,9 @@ class Piece:
             "slide": sl,
             "jump": jmp
         }
+
+    def is_move_legal(self, move):
+        for available_jump in self.movement["jump"]:
+            if available_jump == move:
+                return True
+        return True # TODO: Sliding moves
