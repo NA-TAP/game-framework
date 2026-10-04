@@ -65,7 +65,7 @@ class Piece:
             "jump": jmp
         }
 
-    def is_move_legal(self, move):
+    def is_move_legal(self, move, board):
         for available_jump in self.movement["jump"]:
             if available_jump == move:
                 return True
