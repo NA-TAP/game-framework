@@ -65,8 +65,14 @@ class Piece:
             "jump": jmp
         }
 
-    def is_move_legal(self, move, board):
+    def is_move_legal(self, start, end, board):
+        d_rank = start[2] - end[2]
+        d_rank = abs(d_rank)
+        d_file = start[1] - end[1]
+        d_file = abs(d_file)
+        move = (d_file, d_rank)
         for available_jump in self.movement["jump"]:
             if available_jump == move:
                 return True
-        return True # TODO: Sliding moves
+        for available_slide in self.movement["slide"]:
+            pass
