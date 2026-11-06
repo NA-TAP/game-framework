@@ -54,7 +54,7 @@ class Piece:
             return self.kind == kind and self.color == color
         
     def parse_mvment(self, mvment):
-        matches = re.fullmatch(r"^S\(([-0-9,|]+)\)/J\(([-0-9,|]+)\)$",mvment, re.IGNORECASE, re.MULTILINE, re.UNICODE) # the only and first regex in my code !!!!
+        matches = re.fullmatch(r"^S\(([-0-9,|]+)\)/J\(([-0-9,|]+)\)$",mvment, re.IGNORECASE, re.MULTILINE, re.UNICODE)
         groups = matches.groups()
         slide = groups[1]
         jump = groups[2] 
@@ -75,4 +75,12 @@ class Piece:
             if available_jump == move:
                 return True
         for available_slide in self.movement["slide"]:
-            pass
+            return slide_movement_legal(start, end, self.movement["slide"])
+
+    def slide_movement_legal(start, end, slidedirs, board):
+        d_rank = start[2] - end[2]
+        d_rank = abs(d_rank)
+        d_file = start[1] - end[1]
+        d_file = abs(d_file)
+        move = (d_file, d_rank)
+        return True
