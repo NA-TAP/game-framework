@@ -66,21 +66,30 @@ class Piece:
         }
 
     def is_move_legal(self, start, end, board):
-        d_rank = start[2] - end[2]
+        d_rank = start[1] - end[1]
         d_rank = abs(d_rank)
-        d_file = start[1] - end[1]
+        d_file = start[0] - end[0]
         d_file = abs(d_file)
         move = (d_file, d_rank)
+        slideflag = False
         for available_jump in self.movement["jump"]:
             if available_jump == move:
                 return True
         for available_slide in self.movement["slide"]:
-            return slide_movement_legal(start, end, self.movement["slide"])
+            slideflag = slide_movement_legal(start, end, available_slide) if not slideflag else True
+        return slideflag
 
-    def slide_movement_legal(start, end, slidedirs, board):
-        d_rank = start[2] - end[2]
+    def slide_movement_legal(start, end, slidedir, board):
+        d_rank = start[1] - end[1]
         d_rank = abs(d_rank)
-        d_file = start[1] - end[1]
+        d_file = start[0] - end[0]
         d_file = abs(d_file)
         move = (d_file, d_rank)
+        if (slidedir[1]//d_rank) - (slidedir[1]/d_rank) == 0.0:
+            if (slidedir[2]//d_file) - (slidedir[2]/d_file) == 0.0:
+                pass
+            else:
+                return False
+        else:
+            return False
         return True
